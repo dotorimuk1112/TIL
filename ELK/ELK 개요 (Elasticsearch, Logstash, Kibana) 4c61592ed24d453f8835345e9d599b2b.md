@@ -1,0 +1,48 @@
+# ELK 개요 (Elasticsearch, Logstash, Kibana)
+
+분류: ELK
+
+# ■ ELK 기본 아키텍처
+
+![Untitled](ELK%20%E1%84%80%E1%85%A2%E1%84%8B%E1%85%AD%20(Elasticsearch,%20Logstash,%20Kibana)%204c61592ed24d453f8835345e9d599b2b/Untitled.png)
+
+![Untitled](ELK%20%E1%84%80%E1%85%A2%E1%84%8B%E1%85%AD%20(Elasticsearch,%20Logstash,%20Kibana)%204c61592ed24d453f8835345e9d599b2b/Untitled%201.png)
+
+# ■ Elastic Search
+
+![download.png](ELK%20%E1%84%80%E1%85%A2%E1%84%8B%E1%85%AD%20(Elasticsearch,%20Logstash,%20Kibana)%204c61592ed24d453f8835345e9d599b2b/download.png)
+
+- **NoSQL의 특성을 갖는 오픈소스 검색엔진.**
+- 2004년 샤이 배논(Shay Banon)이 개발한 Compass라는 검색엔진이
+Elastic Search의 전신.
+- 각기 별도의 오픈소스였던 Logstash와 Kibana가 함께 사용되면서
+ELK stack으로 자리매김
+2013년, Elastic에서 Logstash와 Kibana 프로젝트를 합병
+- 현재는 기능, 보안, 인프라 등을 지속적으로 발전시키며 전 세계 수천 개 기업에 솔루션을 제공하고 있으며, 추가 기능을 포함한 유료 버전 제공.
+
+# ■ Log Stash
+
+![download.png](ELK%20%E1%84%80%E1%85%A2%E1%84%8B%E1%85%AD%20(Elasticsearch,%20Logstash,%20Kibana)%204c61592ed24d453f8835345e9d599b2b/download%201.png)
+
+- **다양한 입력에 포함되는 데이터와 로그를 가공하여 원하는 목적에 업로드가 가능한 도구**
+- 다양한 형태의 Input plugins
+    - **Elasticsearch**
+    - Files
+    - SQL queries
+    - HTTP requests
+    - 기타 등등
+- Filter를 통해 데이터가 이동하는 과정에서 구조를 구축하여 강력한 분석
+기능 제공
+    - Log parshing
+    - Expended Data
+    - Add tags
+- 원하는 데이터를 라우팅할 수 있도록 다양한 출력을 제공
+    - **Elasticsearch**
+    - 기타 등등
+
+# ■ Kibana
+
+- Elasticsearch의 시각화 플랫폼
+- 차트, 엑셀 및 맵 등에서 다양한 데이터 시각화 기능
+- 서버 상태 확인 기능 포함
+- **Elasticsearch를 더욱 쉽게 조작하기 위해 필수**
