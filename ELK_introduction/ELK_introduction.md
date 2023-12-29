@@ -4,13 +4,13 @@
 
 # ■ ELK 기본 아키텍처
 
-![Untitled](ELK_introduction/imgs/Untitled.png)
+![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/ELK_introduction/imgs/Untitled.png)
 
-![Untitled](ELK_introduction/imgs/Untitled 1.png)
+![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/ELK_introduction/imgs/Untitled%201.png)
 
 # ■ Elastic Search
 
-![download.png](ELK_introduction/imgs/download.png)
+![download.png](https://github.com/dotorimuk1112/TIL/blob/main/ELK_introduction/imgs/download.png)
 
 - **NoSQL의 특성을 갖는 오픈소스 검색엔진.**
 - 2004년 샤이 배논(Shay Banon)이 개발한 Compass라는 검색엔진이
@@ -22,7 +22,7 @@ ELK stack으로 자리매김
 
 # ■ Log Stash
 
-![download.png](ELK_introduction/imgs/download 1.png)
+![download.png](https://github.com/dotorimuk1112/TIL/blob/main/ELK_introduction/imgs/download%201.png)
 
 - **다양한 입력에 포함되는 데이터와 로그를 가공하여 원하는 목적에 업로드가 가능한 도구**
 - 다양한 형태의 Input plugins
