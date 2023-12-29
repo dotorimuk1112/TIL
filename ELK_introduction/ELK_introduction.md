@@ -1,16 +1,16 @@
-# ELK 개요 (Elasticsearch, Logstash, Kibana)
+# ELK_introduction
 
 분류: ELK
 
 # ■ ELK 기본 아키텍처
 
-![Untitled](ELK/ELK 개요 (Elasticsearch, Logstash, Kibana) 4c61592ed24d453f8835345e9d599b2b/Untitled.png)
+![Untitled](ELK_introduction%204c61592ed24d453f8835345e9d599b2b/Untitled.png)
 
-![Untitled](ELK/ELK 개요 (Elasticsearch, Logstash, Kibana) 4c61592ed24d453f8835345e9d599b2b/Untitled 1.png)
+![Untitled](ELK_introduction%204c61592ed24d453f8835345e9d599b2b/Untitled%201.png)
 
 # ■ Elastic Search
 
-![download.png](ELK/ELK 개요 (Elasticsearch, Logstash, Kibana) 4c61592ed24d453f8835345e9d599b2b/download.png)
+![download.png](ELK_introduction%204c61592ed24d453f8835345e9d599b2b/download.png)
 
 - **NoSQL의 특성을 갖는 오픈소스 검색엔진.**
 - 2004년 샤이 배논(Shay Banon)이 개발한 Compass라는 검색엔진이
@@ -22,7 +22,7 @@ ELK stack으로 자리매김
 
 # ■ Log Stash
 
-![download.png](ELK/ELK 개요 (Elasticsearch, Logstash, Kibana) 4c61592ed24d453f8835345e9d599b2b/download 1.png)
+![download.png](ELK_introduction%204c61592ed24d453f8835345e9d599b2b/download%201.png)
 
 - **다양한 입력에 포함되는 데이터와 로그를 가공하여 원하는 목적에 업로드가 가능한 도구**
 - 다양한 형태의 Input plugins
