@@ -1,0 +1,447 @@
+# Elasticsearch
+
+분류: ELK
+
+# ↓ Elasticsearch 개요 ↓
+
+[ELK_introduction](https://www.notion.so/ELK_introduction-4c61592ed24d453f8835345e9d599b2b?pvs=21)
+
+# Elasticsearch 특징
+
+- **NoSQL**
+    - Elasitcsearch는 검색엔진이지만, NoSQL 데이터를 저장하여 이들을 검색하는 형태기에, 당연히도 NoSQL의 특성 역시 가지고 있음.
+    
+    | 엘라스틱서치 | MYSQL 등의 관계형 데이터베이스(RDBMS) |
+    | --- | --- |
+    | 인덱스 | 데이터베이스 |
+    | 샤드 | 파티션 |
+    | 타입 | 테이블 |
+    | 문서 | 행 |
+    | 필드 | 열 |
+    | 매핑 | 스키마 |
+    | Query DSL | SQL |
+    - Elasticsearch에는 하나의 인덱스에 하나의 타입만을 구성할 수 있음.
+    - 또한 기본적으로 HTTP를 통해 json 형식의 Restful API를 사용
+- **전문 검색(Full Text Search)**
+    - RDBMS에서는 where문에 ‘column’=’value’ 형태로 특정 필드를 지정해야 하지만, Elasticsearch는 여러 개의 필드를 함께 색인해서 전체에서 특정 단어를 검색하는 것이 가능함.
+- **통계 분석 기능**
+    - 비정형 로그 데이터를 수집하고 Kibana를 이용해 통계 분석이 가능함.
+    최근 8 버전 이상에서 머신러닝 등 추가적인 분석 도구 지원
+- **Multi-tenancy**
+    - 검색할 필드로 여러 개의 인덱스를 한 번에 조회 가능
+- **역색인(inverted index)**
+    - 역색인 구조를 통해 특정 단어 검색 시 문서 전체가 아니라 단어가 포함된 특정 문서를 알아내 매우 빠른 검색 속도를 자랑함
+    - 다만 데이터의 입력과 동시에 역색인을 생성하기에 데이터의 입력, 생성 속도가 다소 느릴 수 있음
+- **분산 환경**
+    - Cluster > Node > Shard > Document > Field
+    - Elasticsearch에서는 데이터를 여러 Field로 구성된 document라는 json 형태로 저장.이 document들은 다시 Shard라는 작은 단위로 나누어 제공하여 데이터를 분산하여 빠르게 처리함.
+    - 또한 각 샤드들은 원본과 여러 개의 복제본(replica)으로 나뉨.
+        - 이 복제본들은 아래 삽화와 같이 원본과 다른 Index에 저장되어 
+        서버의 예기치 못한 shutdown이나 데이터의 소실 등에 대응 가능
+    - 원본과 복제본이 Index가 되며, 이 Index를 node라는 Elasticsearch의 인스턴스 단위에 나누어 저장. 다시 이 node가 cluster 단위로 최종 관리됨.
+    
+    ![Untitled](Elasticsearch%2068ee6a3950e14dfd95ad03620aa603b6/Untitled.png)
+    
+- **준실시간 검색**
+    - Elasticsearch는 데이터 저장 시점에 데이터를 색인하기 시작함
+    - 색인된 데이터는 약 1초 뒤부터 검색이 가능해져서 완전한 실시간 검색은 불가
+    - 내부적으로 commit, flush와 같은 복잡한 과정을 거침
+- **transaction, rollback이 없다**
+    - Cluster 성능 향상을 위해 비용 소모가 큰 두 기능을 탑재하지 않음
+    - 작성/수정/삭제 즉시 commit. 따라서 데이터를 보다 조심히 다룰 필요가 있음.
+
+# Elasticsearch 기본 환경 구성
+
+- Elasticsearch 설치
+    - kibana와 버전이 반드시 같아야 함
+
+[Elasticsearch와 Kibana의 개발사인 Elastic에 오신 것을 환영합니다](https://www.elastic.co/kr/)
+
+- 설치된 Elasticsearch/config/Elasticsearch.yml 수정
+    
+    ```yaml
+    #config/elasticsearch.yml
+    
+    cluster.name: name-es
+    node.name: name-es-node01
+    
+    path:
+      data: dir\elk\elasticsearch\data
+      logs: dir\elasticsearch\logs  
+    
+    network.host: 127.0.0.1
+    
+    discovery.type: "single-node"
+    xpack.security.enabled: false
+    ```
+    
+
+- config/jvm.options의 주석을 해제하고 아래와 같이 수정
+    
+    ```yaml
+    # config/jvm.options - 기본적으로는 시스템 메모리의 절반으로 지정
+    # config/jvm.options.d 디렉토리 밑에 별도 파일을 새로 생성해서 힙 크기를 지정할 수도 있음
+    -Xms1g
+    -Xmx1g
+    ```
+    
+
+- 터미널에서 설치 경로로 이동 후 아래 명령어 실행
+    
+    ```bash
+    # 윈도우
+    $ bin\elasticsearch.bat
+    
+    # 맥
+    $ bin/elasticsearch
+    ```
+    
+- 실행 후 웹에서 [localhost:9200](http://localhost:9200) 주소로 이동하여 정상 실행 여부 확인
+    
+    ```
+    {
+      "name" : "name-es-node01",
+      "cluster_name" : "name-es",
+      "cluster_uuid" : "JvfbPfuaTfistOKJy61NIA",
+      "version" : {
+        "number" : "8.11.3",
+        "build_flavor" : "default",
+        "build_type" : "zip",
+        "build_hash" : "64cf052f3b56b1fd4449f5454cb88aca7e739d9a",
+        "build_date" : "2023-12-08T11:33:53.634979452Z",
+        "build_snapshot" : false,
+        "lucene_version" : "9.8.0",
+        "minimum_wire_compatibility_version" : "7.17.0",
+        "minimum_index_compatibility_version" : "7.0.0"
+      },
+      "tagline" : "You Know, for Search"
+    }
+    ```
+    
+- elasticsearch.yml에서 data.logs로 지정했던 디렉토리로 이동해서 로그 파일을 확인해 started가 확인되면 elasticsearch가 작동한 것을 확인할 수 있음
+
+- Kibana 설치
+    - 반드시 elasticsearch와 버전이 같아야 함
+    
+    [Download Kibana Free | Get Started Now](https://www.elastic.co/kr/downloads/kibana)
+    
+
+- config/kibana.yml 수정
+    
+    ```bash
+    server.port: 5601
+    server.host: localhost
+    server.publicBaseUrl: "http://localhost:5601"
+    elasticsearch.hosts: ["http://localhost:9200"]
+    ```
+    
+
+- 터미널에서 kibana 실행
+    
+    ```bash
+    
+    $ bin/kibana.bat
+    
+    # 맥에서는
+    $ bin\kibana
+    ```
+    
+- 실행 성공시 **http://localhost:5601**로 Kibana에 접속할 수 있음
+- Elasticsearch Tools Chrome extension
+    - 추천 플러그인
+    
+    [Multi Elasticsearch Head](https://chrome.google.com/webstore/detail/multi-elasticsearch-head/cpmmilfkofbeimbmgiclohpodggeheim)
+    
+    [Elasticsearch Head 플러그인(Chrome Extension)](https://realkoy.tistory.com/entry/Elasticsearch-Head-Chrome-Extension)
+    
+
+# Elasticsearch 기본 기능
+
+- REST API를 활용하기에 CRUD를 각각 명령어(API)를 만들 필요 없이 [localhost:8000/post/1이라는](http://localhost:8000/post/1이라는) 똑같은 주소를 공유해 사용한다
+    - SQL과의 명령어 비교
+        - CREATE == POST : 데이터 전체를 첨부해서 전송
+        - READ(RETRIEVE) == GET, HEAD : 첨부하는 데이터 없음.
+        - UPDATE == PUT(전체 수정): 수정 기능
+            - PUT은 CREATE 용도로도 사용할 수 있음
+        - DELETE == DELETE
+    
+
+## 기본 문법과 예시
+
+### ■ CRUD
+
+```json
+**# CREATE
+1) PUT**
+PUT [인덱스 이름]/_doc/[_id값]  # ID값을 직접 부여
+{
+  [문서 내용]
+}
+
+**ex)**
+PUT idxname/_doc/1
+{
+  "title": "hello world",
+  "views": 1234,
+  "public": true,
+  "created": "2019-01-17T14:05:01.234Z"
+}
+
+**2) POST**
+POST [인덱스 이름]/
+{
+  ID자동생성 [문서 내용]
+}
+
+**ex)**
+POST idxname/_doc/
+{
+  "student": {
+    "name": "신짱구", #student.name으로 메모리에 오름
+    "age": 5
+  }
+}
+```
+
+```json
+
+**# READ(RETRIEVE)**
+GET [인덱스 이름]/_doc/[_id값]
+
+**ex) _search api 사용**
+GET idxname/_doc/1
+
+```
+
+```json
+**# UPDATE**
+POST [인덱스 이름]/_update/[_id값]
+{
+  "doc": {
+    "필드명(컬럼명)": "수정할 내용"
+  }
+}
+
+******ex)******
+POST my_index/_update/1
+{
+  "doc": {
+    "title": "hello elasticsearch!"
+  }
+}
+```
+
+```json
+
+**# DELETE** 
+DELETE [인덱스 이름]/_doc/[_id값]
+```
+
+### ■ 검색
+
+- 검색 API는 GET과 POST 둘 다 사용해도 동일하게 정상 작동.
+    
+    ```jsx
+    
+    GET [인덱스 이름]/_search
+    POST [인덱스 이름]/_search
+    
+    ****************************************************# title 필드에 'hello world'라는 값을 갖는 document 검색****************************************************
+    GET my_index/_search
+    {
+      "query": {
+        "match": {
+          "title": "hello world"
+        }
+      }
+    }
+    ```
+    
+
+### ■ 인덱스 관리
+
+- 모든 인덱스는 settings와 mappings라는 두 개의 정보 단위를 가짐.
+    
+    <aside>
+    💡 Setting
+    인덱스의 기본 정보들과 설정값을 포함하는 정보.
+    샤드의 수, 인덱스 이름, UNIX timestamp(1970년 1월 1일부터 지난 시간을 초로 표기하는 시간 단위) 등을 포함
+    
+    </aside>
+    
+    <aside>
+    💡 Mapping
+    문서가 인덱스에 어떻게 색인되고 저장되는지 정의하는 부분. SQL의 자료형과 유사
+    
+    </aside>
+    
+    - **예시 코드**
+        
+        ```json
+        ******# 예시로 만든 인덱스의 정보******
+        {
+          "my_index": {
+            "aliases": {},
+            "mappings": {
+              "properties": {
+                "created": {
+                  "type": "date"
+                },
+                "public": {
+                  "type": "boolean"
+                },
+                "title": {
+                  "type": "text",
+                  "fields": {
+                    "keyword": {
+                      "type": "keyword", # 데이터 타입
+                      "ignore_above": 256
+                    }
+                  }
+                },
+                "views": {
+                  "type": "long"
+                }
+              }
+            },
+            "settings": {
+              "index": {
+                "routing": {
+                  "allocation": {
+                    "include": {
+                      "_tier_preference": "data_content"
+                    }
+                  }
+                },
+                "number_of_shards": "1", # 샤드의 수
+                "provided_name": "my_index", # 이름
+                "creation_date": "1703643578682", # UNIX timestamp
+                "number_of_replicas": "1",
+                "uuid": "daeRpFK4RrmJK5Q2UW9k6Q",
+                "version": {
+                  "created": "8500003"
+                }
+              }
+            }
+          }
+        }
+        ```
+        
+    
+- 동적 맵핑과 명시적 맵핑
+    - **동적 매핑 (Dynamic Mapping):**
+        - **자동 생성:** 동적 매핑은 Elasticsearch가 데이터를 색인화할 때 필드를 자동으로 생성. 예를 들어, 새로운 인덱스에 문서를 추가할 때 Elasticsearch는 문서의 내용을 분석하여 필드를 자동으로 생성.
+        - **유연성:** 새로운 필드가 나타나면 Elasticsearch는 자동으로 해당 필드에 대한 매핑을 생성. 이는 데이터가 동적으로 변경되는 경우 특히 유용.
+        - **위험성:** 동적 매핑은 Elasticsearch가 자동으로 필드를 매핑하므로 의도하지 않은 매핑이 발생할 수 있음. 잘못된 매핑이 데이터의 일관성을 해칠 수 있음.
+    - **명시적 매핑 (Explicit Mapping):**
+        - **수동 정의:** 명시적 매핑은 사용자가 필드에 대한 매핑을 직접 정의하는 것. 인덱스를 생성할 때 미리 정의된 매핑을 사용하거나, 기존 인덱스에 새로운 필드를 추가할 때 명시적으로 매핑을 지정할 수 있음.
+        - **제어 가능성:** 사용자는 데이터 모델을 명시적으로 제어할 수 있음. 필드 유형, 분석기, 포맷 등을 정의하여 데이터의 구조와 형식을 명확하게 지정할 수 있음.
+        - **안정성:** 명시적 매핑은 사용자가 데이터 구조를 더욱 안정적으로 관리 가능. 의도치 않은 매핑 변화를 방지.
+
+### ■ 배열
+
+- Elasticsearch에는 별도의 배열 구문이 없음.
+단일 숫자 데이터를 long 타입 필드에 넣을 수도 있고 [1, 2, 3]처럼 여러 개로 이루어진 형태의 데이터도 넣을 수 있음.
+    - **예시 코드**
+        
+        ```json
+        **# long/keyword 타입 확인**
+        PUT array_test
+        	{
+        		"mappings": {
+        			"properties": {
+        				"longField": {
+        				"type": "long"
+        				},
+        				"keywordField": {
+        					"type": "keyword"
+        				}
+        			}
+        		}
+        }
+        
+        **# 입력**
+        PUT array_test/_doc/1
+        {
+          "longFiled": [123, 1, 2, 3]
+          "keywordFiled": ["this", "is", "it"]
+        }
+        
+        **# 출력**
+        {
+          "_index": "array_test",
+          "_id": "1",
+          "_version": 4,
+          "_seq_no": 8,
+          "_primary_term": 6,
+          "found": true,
+          "_source": {
+            "longFiled": [
+              123,
+              1,
+              2,
+              3
+            ],
+            "keywordFiled": [
+              "this",
+              "is",
+              "it"
+            ]
+          }
+        }
+        ```
+        
+
+# Elasticsearch 검색 API
+
+![Untitled](Elasticsearch%2068ee6a3950e14dfd95ad03620aa603b6/Untitled%201.png)
+
+![Untitled](Elasticsearch%2068ee6a3950e14dfd95ad03620aa603b6/Untitled%202.png)
+
+### ■ 검색을 위한 query: match / term
+
+- match query: 쿼리 수행 전 분석기를 통해 text를 분석한 후 검색 수행
+- term query: 별도의 분석 작업 없이 입력된 text가 존재하는 doc 검색
+    - keyword 데이터 타입을 사용하는 field 검색 시 사용
+    - keyword 타입 검색 예시
+        
+        ```json
+        **# 키워드 타입 검색**
+        POST woorifisa/_doc/1
+        ****{
+          "student": {
+            "name": "신 짱구",
+            "age": 5
+          }
+        }
+        ****
+        GET woorifisa/_search
+        {
+          "query": {
+            "match": {
+              "student.name.keyword": "짱구"
+            }
+          }
+        }
+        
+        **# 출력 결과: keyword 타입은 "신 짱구"를 한 덩어리로 인식하는
+        	타입이기에 중간 구성 요소인 "짱구"를 입력하면 검색이 불가**
+        {
+          "took": 0,
+          "timed_out": false,
+          "_shards": {
+            "total": 1,
+            "successful": 1,
+            "skipped": 0,
+            "failed": 0
+          },
+          "hits": {
+            "total": {
+              "value": 0,
+              "relation": "eq"
+            },
+            "max_score": null,
+            "hits": []
+          }
+        }
+        ```
