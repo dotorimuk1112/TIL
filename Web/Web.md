@@ -36,7 +36,7 @@
 - 한 대에는 정보를 저장하고(Server), 한 대는 정보를 열람한다.(Client)
 - Client는 Server에 요청(request)을 보내고 Server는 Client에 응답(response)한다.
     
-    ![Untitled](Web%20684b23627b7a4615849c3fa7536130b8/Untitled.png)
+    ![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/Web/Web/Untitled.png)
     
     <aside>
     💡 **HTTP
@@ -49,7 +49,7 @@
 
 ---
 
-![Untitled](Web%20684b23627b7a4615849c3fa7536130b8/Untitled%201.png)
+![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/Web/Web/201.png)
 
 - HTML, CSS, JavaScript의 역할을 쉽게 이해할 수 있는 삽화
     - HTML: 웹 페이지의 구조와 내용
@@ -122,7 +122,7 @@
 
 - 출력 예시
     
-    ![Untitled](Web%20684b23627b7a4615849c3fa7536130b8/Untitled%202.png)
+    ![Untitled](Whttps://github.com/dotorimuk1112/TIL/blob/main/Web/Web/202.png)
     
 
 ### 2. Paragraph
@@ -135,7 +135,7 @@
 
 - 다음과 같이 단락 사이에 구분을 위한 공백이 생긴다.
     
-    ![Untitled](Web%20684b23627b7a4615849c3fa7536130b8/Untitled%203.png)
+    ![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/Web/Web/203.png)
     
 
 ### 3. List
@@ -161,7 +161,7 @@
     
 - 출력 결과
     
-    ![Untitled](Web%20684b23627b7a4615849c3fa7536130b8/Untitled%204.png)
+    ![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/Web/Web/204.png)
     
 
 ### 4. Table
@@ -193,7 +193,7 @@
 
 - 출력 결과
     
-    ![Untitled](Web%20684b23627b7a4615849c3fa7536130b8/Untitled%205.png)
+    ![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/Web/Web/205.png)
     
 
 ### 5. anchor
@@ -204,7 +204,7 @@
     <a href="https://www.google.com" target="_blank">구글로 이동</a>
     ```
     
-    ![Untitled](Web%20684b23627b7a4615849c3fa7536130b8/Untitled%206.png)
+    ![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/Web/Web/206.png)
     
     - anchor 태그와 href 속성를 이용해 흔히 아는 하이퍼링크를 만들 수 있다.
 
@@ -228,7 +228,7 @@
         
         - 이런 코드로 아래와 같이 유튜브 재생창을 웹 페이지로 불러올 수 있다.
         
-        ![Untitled](Web%20684b23627b7a4615849c3fa7536130b8/Untitled%207.png)
+        ![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/Web/Web/207.png)
         
 
 # ✅ Bootstrap
