@@ -35,7 +35,7 @@ DBMS 중에서도 데이터베이스 간의 관계를 중심으로 관리하는 
 
 [Visual Studio Tools 다운로드 - Windows, Mac, Linux용 무료 설치](https://visualstudio.microsoft.com/ko/downloads/)
 
-![Untitled](.\SQL\MySQL_1\Untitled.png)
+![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/SQL/MySQL_1/Untitled.png)
 
 - Workbench에 접속할 수 있는 화면.
     - 로컬 환경에서 작업할 수 있고, AWS 등 클라우드와 연결하여 작업할 수도 있다
