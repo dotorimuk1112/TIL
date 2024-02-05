@@ -27,22 +27,22 @@
 
 1. **Springboot 프로젝트의 pom.xml을 우클릭, Run As의 Maven bulid 클릭**
     
-    ![Untitled](AWS_1%204e32c21a4d684cfaaa3b04c901950ab3/Untitled.png)
+    ![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/AWS/AWS_1/Untitled.png)
     
 
 1. Goals에 package 입력 후 Run 클릭
     
-    ![Untitled](AWS_1%204e32c21a4d684cfaaa3b04c901950ab3/Untitled%201.png)
+    ![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/AWS/AWS_1/Untitled%201.png)
     
 
 1. project/target 디렉토리에 project-0.0.1-SNAPSHOT.jar가 생긴 것을 볼 수 있다.
     
-    ![Untitled](AWS_1%204e32c21a4d684cfaaa3b04c901950ab3/Untitled%202.png)
+    ![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/AWS/AWS_1/Untitled%202.png)
     
 
 1. AWS에 접속하고 Lightsail을 검색한다.
     
-    ![Untitled](AWS_1%204e32c21a4d684cfaaa3b04c901950ab3/Untitled%203.png)
+    ![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/AWS/AWS_1/Untitled%203.png)
     
     <aside>
     💡 Lightsail
@@ -54,13 +54,13 @@
     
 2. 인스턴스를 생성한다.
     
-    ![Untitled](AWS_1%204e32c21a4d684cfaaa3b04c901950ab3/Untitled%204.png)
+    ![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/AWS/AWS_1/Untitled%204.png)
     
 3. 알맞은 Linux 배포판을 선택한다.
 알맞은 요금제를 선택한다.
 선택을 마치면 맨 아래의 인스턴스 생성 버튼을 누른다.
     
-    ![Untitled](AWS_1%204e32c21a4d684cfaaa3b04c901950ab3/Untitled%205.png)
+    ![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/AWS/AWS_1/Untitled%205.png)
     
 4. 생성한 인스턴스를 클릭하고 네트워킹 탭을 선택한다.
     
@@ -68,11 +68,11 @@
     
     포트 번호는 Springboot 프로젝트의 app.properties에서 설정한 포트 번호와 일치해야 한다. 
     
-    ![Untitled](AWS_1%204e32c21a4d684cfaaa3b04c901950ab3/Untitled%206.png)
+    ![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/AWS/AWS_1/Untitled%206.png)
     
 5. aws-key.pem 다운로드
     
-    ![Untitled](AWS_1%204e32c21a4d684cfaaa3b04c901950ab3/Untitled%207.png)
+    ![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/AWS/AWS_1/Untitled%207.png)
     
     - 원하는 위치에 .pem 확장자로 저장
 
@@ -80,15 +80,15 @@
 
 1. **MobaXterm을 설치한다.**
     
-    ![Untitled](AWS_1%204e32c21a4d684cfaaa3b04c901950ab3/Untitled%208.png)
+    ![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/AWS/AWS_1/Untitled%208.png)
     
 2. **MobaXterm 실행 후 Session - SSH 선택**
     
-    ![Untitled](AWS_1%204e32c21a4d684cfaaa3b04c901950ab3/Untitled%209.png)
+    ![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/AWS/AWS_1/Untitled%209.png)
     
 3. **Session Setting**
     
-    ![Untitled](AWS_1%204e32c21a4d684cfaaa3b04c901950ab3/Untitled%2010.png)
+    ![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/AWS/AWS_1/Untitled%2010.png)
     
     - Remote host에는 아까 생성했던 인스턴스의 퍼블릭 IPv4 주소 입력
     - Specify username에는 ubuntu 입력
@@ -96,7 +96,7 @@
     
     1. 터미널을 통해 자바 설치 / 컨테이너에 jar 파일 업로드
         
-        ![Untitled](AWS_1%204e32c21a4d684cfaaa3b04c901950ab3/Untitled%2011.png)
+        ![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/AWS/AWS_1/Untitled%2011.png)
         
         ```powershell
         sudo apt update
