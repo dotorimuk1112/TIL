@@ -45,13 +45,6 @@
     브라우저는 서버로부터 HTML 소스 파일을 전송 받아서 화면에 표현한다.
     
     </aside>
-    
-
----
-
-![Untitled](https://github.com/dotorimuk1112/TIL/blob/main/Web/Web/201.png)
-
-- HTML, CSS, JavaScript의 역할을 쉽게 이해할 수 있는 삽화
     - HTML: 웹 페이지의 구조와 내용
     - CSS: 웹 페이지의 모양
     - JavaScript: 웹 페이지의 행동 및 응용 프로그램
